@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import TodoList from './components/TodoList'
+import { useSelector, useDispatch } from "react-redux";
+import { addToToDoList } from './actions/todoList';
+const App = () => {
+  const dispatch = useDispatch();
+  const { todoList } = useSelector((state) => state.todo);
+  const [todoText, setTodoText] = useState()
+  const onChange = (e) => {
+    setTodoText(e.target.value)
+  }
+  const handleClick = () => {
+    dispatch(addToToDoList(todoText));
+  }
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TodoList todos={todoList} onTodoClick={console.log("test")} />
+      <input onChange={(e) => onChange(e)}></input>
+      <button onClick={() => handleClick()}>Add</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
